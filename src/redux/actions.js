@@ -14,6 +14,7 @@ export const addTask = (task) => (dispatch, getState) => {
   }
 };
 
+
 export const deleteTask = (task) => (dispatch,getState) => {
     const {
         Task : {tasks},
@@ -25,5 +26,22 @@ export const deleteTask = (task) => (dispatch,getState) => {
     })
     };
 
-
+    export const toggleTask = (taskId) => (dispatch, getState) => {
+      const {
+        Task : {tasks},
+      } = getState();
+    
+      const updatedTasks = tasks.map(task => {
+        if (task.id === taskId) {
+          return { ...task, completed: !task.completed }; // Toggle completion status
+        }
+        return task;
+      });
+    
+      dispatch({
+        type: "TOGGLE_TASK",
+        payload: taskId,
+        tasks: updatedTasks,
+      });
+    };
 
